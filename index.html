@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Memorama</title>
+    <style>
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        width: 390px;
+        font-family: sans-serif;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid;
+        background: rgb(246, 242, 210);
+      }
+      header {
+        display: flex;
+        margin: 20px;
+      }
+      header h1 {
+        margin: auto;
+      }
+      header button {
+        margin: auto;
+        width: 70px;
+        height: 40px;
+        cursor: pointer;
+      }
+      #btn-start {
+        background-color: rgb(113, 236, 113);
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 15px;
+      }
+
+      #restart-btn {
+        background-color: rgb(227, 97, 134);
+        font-size: 15px;
+
+        font-weight: bold;
+        border-radius: 15px;
+      }
+
+      .stage-container {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .btn-item {
+        width: 90%;
+        height: 90px;
+        margin: auto;
+        margin-bottom: 5px;
+        font-size: 60px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 15px;
+      }
+
+      .ocultar-imagen {
+        color: transparent;
+      }
+
+      .estadisticas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .estadisticas div {
+        margin: 10px;
+        border: 2px solid;
+      }
+
+      .sin-iniciar {
+        pointer-events: none;
+        color: gray;
+      }
+
+      .cancelado {
+        pointer-events: none;
+        cursor: not-allowed;
+      }
+      .tiempo {
+        width: 300px;
+      }
+
+      .btn {
+        background-color: rgb(214, 214, 214);
+        border: black 2px solid;
+        width: 80%;
+        height: 80px;
+      }
+
+      .pie-pagina h3,
+      p {
+        text-align: center;
+      }
+
+      .social-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      i {
+        font-size: 25px;
+        color: black;
+      }
+
+      .social-div a {
+        margin: 0px 15px 40px 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Memorama</h1>
+      <button id="btn-start">Start</button>
+      <button id="restart-btn">ReStart</button>
+    </header>
+    <main>
+      <div class="stage-container">
+        <p class="btn btn-item btn-item1"></p>
+        <p class="btn btn-item btn-item2"></p>
+        <p class="btn btn-item btn-item3"></p>
+        <p class="btn btn-item btn-item4"></p>
+        <p class="btn btn-item btn-item5"></p>
+        <p class="btn btn-item btn-item6"></p>
+        <p class="btn btn-item btn-item7"></p>
+        <p class="btn btn-item btn-item8"></p>
+        <p class="btn btn-item btn-item9"></p>
+        <p class="btn btn-item btn-item10"></p>
+        <p class="btn btn-item btn-item11"></p>
+        <p class="btn btn-item btn-item12"></p>
+        <p class="btn btn-item btn-item13"></p>
+        <p class="btn btn-item btn-item14"></p>
+        <p class="btn btn-item btn-item15"></p>
+        <p class="btn btn-item btn-item16"></p>
+      </div>
+      <br />
+      <div class="estadisticas">
+        <!--  <div>
+          <p>Asiertos: <span id="asiertos-s">0</span></p>
+        </div>
+        <div>
+          <p>Movimientos: <span id="movimientos-s">0</span></p>
+        </div> -->
+        <div>
+          <p class="tiempo">TIEMPO: <span id="tiempo-s">60</span> segundos</p>
+        </div>
+      </div>
+    </main>
+    <footer class="pie-pagina">
+      <h3>Creado por Boris Bodeman &copy;</h3>
+      <p>Seguime en mis redes sociales.</p>
+      <div class="social-div">
+        <a
+          href="https://github.com/BodemanBoris/bodemanboris.github.io/tree/main/Encriptador"
+          target="_b
+        "
+          ><i class="fa-brands fa-github"></i
+        ></a>
+        <a
+          href="https://www.linkedin.com/in/boris-bodeman-954153a1/"
+          target="_b
+        "
+          ><i class="fa-brands fa-linkedin"></i
+        ></a>
+      </div>
+    </footer>
+
+    <script>
+      /* *******************  VARIABLES ********************* */
+      const d = document;
+      let animales = [
+        "🐵",
+        "🐵",
+        "🐮",
+        "🐮",
+        "🐶",
+        "🐶",
+        "😺",
+        "😺",
+        "🐷",
+        "🐷",
+        "🐲",
+        "🐲",
+        "🐯",
+        "🐯",
+        "🐰",
+        "🐰",
+      ];
+      const $btns = d.querySelectorAll(".btn");
+      //const $asiertos = d.getElementById("asiertos-s");
+      //const $movimientos = d.getElementById("movimientos-s");
+      const $tiempo = d.getElementById("tiempo-s");
+      const $btnStart = d.getElementById("btn-start");
+      const $reStartBtn = d.getElementById("restart-btn");
+
+      //******* VARIABLES FUNCIONALES
+      let archivar = [];
+      let aciertos = 0;
+      let movimientos = 0;
+
+      /* ******************* EVENTOS ********************* */
+
+      d.addEventListener("DOMContentLoaded", (e) => {
+        mostrarJuego();
+      });
+
+      /* ******************* FUNCIONES ********************* */
+
+      const destaparCarta = function (evento) {
+        archivar.push(this);
+        this.classList.remove("ocultar-imagen");
+        if (archivar.length > 1) {
+          if (archivar[0].textContent === archivar[1].textContent) {
+            archivar.forEach((archivo) => {
+              archivo.classList.add("cancelado");
+              archivo.disabled;
+            });
+            archivar = [];
+            aciertos++;
+            movimientos++;
+            if (aciertos > 7) {
+              alert("Ganaste");
+              reIniciarJuego();
+            }
+            return;
+          }
+          if (archivar[0].textContent !== archivar[1].textContent)
+            archivar.forEach((archivo) => {
+              let timer = setInterval(() => {
+                archivo.classList.add("ocultar-imagen");
+                clearInterval(timer);
+              }, 500);
+            });
+
+          movimientos++;
+          archivar = [];
+        }
+      };
+
+      const iniciarJuego = () => {
+        $btns.forEach((btn) => btn.classList.remove("sin-iniciar"));
+        $btns.forEach((btn) => btn.classList.add("ocultar-imagen"));
+        $reStartBtn.classList.remove("sin-iniciar");
+        $btnStart.classList.add("sin-iniciar");
+        definirAleatorio();
+        temporizadorJuego();
+      };
+
+      const temporizadorJuego = () => {
+        let seconds = 60;
+        let tiempito = setInterval(() => {
+          seconds--;
+          $tiempo.textContent = seconds;
+          if (seconds === 0) {
+            clearInterval(tiempito);
+            alert("Perdiste");
+          }
+        }, 1000);
+      };
+
+      const definirAleatorio = () => {
+        $btns.forEach((btn) => {
+          const indice = Math.floor(Math.random() * animales.length);
+          const valor = animales[indice];
+          animales.splice(indice, 1);
+          btn.innerHTML = valor;
+        });
+      };
+
+      const reIniciarJuego = () => {
+        location.reload();
+      };
+
+      const mostrarJuego = () => {
+        $btns.forEach((btn) => btn.classList.add("sin-iniciar"));
+        $reStartBtn.classList.add("sin-iniciar");
+      };
+
+      /* *******************  A VER - EVENTOS ********************* */
+      $btnStart.addEventListener("click", iniciarJuego);
+      $reStartBtn.addEventListener("click", reIniciarJuego);
+      $btns.forEach((btn) => {
+        btn.addEventListener("click", destaparCarta);
+      });
+
+      /* *******************  FIN ********************* */
+    </script>
+  </body>
+</html>
